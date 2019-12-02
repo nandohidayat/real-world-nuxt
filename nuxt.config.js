@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+import EventService from './services/EventService'
 
 export default {
   mode: 'universal',
@@ -80,5 +81,11 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+  generate: {
+    routes: async () => {
+      const { data } = await EventService.getEvents()
+      return data.map((e) => `/event/${e.id}`)
+    }
   }
 }
