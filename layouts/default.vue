@@ -1,5 +1,5 @@
 <template>
-  <v-app dark>
+  <v-app>
     <v-navigation-drawer v-model="drawer" fixed app temporary>
       <v-list>
         <v-list-item
@@ -18,7 +18,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar fixed app>
+    <v-app-bar fixed app color="teal" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
     </v-app-bar>
@@ -27,7 +27,7 @@
         <nuxt />
       </v-container>
     </v-content>
-    <v-footer>
+    <v-footer dark color="teal">
       <span>&copy; 2019</span>
     </v-footer>
   </v-app>
@@ -35,6 +35,19 @@
 
 <script>
 export default {
+  head() {
+    return {
+      titleTemplate: '%s - Real World Events',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content:
+            'Where you can find all the events taking place in your neighborhood'
+        }
+      ]
+    }
+  },
   data() {
     return {
       drawer: false,
@@ -47,7 +60,7 @@ export default {
         {
           icon: 'mdi-chart-bubble',
           title: 'Create',
-          to: '/create'
+          to: '/event/create'
         }
       ],
       title: 'Vuetify.js'

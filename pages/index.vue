@@ -2,10 +2,42 @@
   <v-layout column justify-center align-center>
     <v-flex xs12 sm8 md6>
       <h1>Events</h1>
+      <EventCard
+        v-for="(event, i) in events"
+        :key="i"
+        :event="event"
+        :data-index="i"
+      />
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-export default {}
+import { mapState } from 'vuex'
+
+import EventCard from '@/components/EventCard'
+
+export default {
+  head() {
+    return {
+      title: 'Event Listing'
+    }
+  },
+  components: {
+    EventCard
+  },
+  computed: mapState({
+    events: (state) => state.events.events
+  }),
+  async fetch({ store, error }) {
+    try {
+      await store.dispatch('events/fetchEvents')
+    } catch (e) {
+      error({
+        statusCode: 503,
+        message: 'Unable to fetch events at this time. Please try again.'
+      })
+    }
+  }
+}
 </script>

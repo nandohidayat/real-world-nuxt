@@ -1,14 +1,18 @@
 <template>
   <v-app dark>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
-    </h1>
-    <h1 v-else>
-      {{ otherError }}
-    </h1>
-    <NuxtLink to="/">
-      Home page
-    </NuxtLink>
+    <v-layout column justify-center align-center>
+      <v-flex xs12 sm8 md6 class="text-center">
+        <h1 v-if="error.statusCode === 404">
+          {{ pageNotFound }}
+        </h1>
+        <h1 v-else>
+          {{ error.message }}
+        </h1>
+        <NuxtLink to="/">
+          Home page
+        </NuxtLink>
+      </v-flex>
+    </v-layout>
   </v-app>
 </template>
 
@@ -23,15 +27,14 @@ export default {
   },
   head() {
     const title =
-      this.error.statusCode === 404 ? this.pageNotFound : this.otherError
+      this.error.statusCode === 404 ? this.pageNotFound : this.error.message
     return {
       title
     }
   },
   data() {
     return {
-      pageNotFound: '404 Not Found',
-      otherError: 'An error occurred'
+      pageNotFound: '404 Not Found'
     }
   }
 }
